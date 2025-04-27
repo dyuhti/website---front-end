@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .sidebar {
+            width: 250px;
+            height: 100vh;
+            background-color: #222;
+            color: white;
+            padding: 20px;
+            position: fixed;
+            left: 0;
+            top: 0;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar.hidden {
+            width: 60px;
+            overflow: hidden;
+        }
+
+        .sidebar .toggle-btn {
+            cursor: pointer;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .sidebar ul {
+            list-style: none;
+        }
+
+        .sidebar ul li {
+            padding: 12px 0;
+            cursor: pointer;
+        }
+
+        .sidebar ul li:hover {
+            background: #444;
+        }
+
+        .sidebar.hidden + .main-content {
+            margin-left: 70px;
+        }
+    </style>
+</head>
+<!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="toggle-btn" onclick="toggleSidebar()">☰</div>
+        <ul>
+            <li onclick="location.href='./mainpg.html'">Dashboard</li>
+            <li>Orders</li>
+            <li>Cart</li>
+            <li>Customers</li>
+            <li>About</li>
+        </ul>
+    </div>
+<body>
+
+</body>
+</html>

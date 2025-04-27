@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Women's Fashion</title>
+    <style>
+        body {
+            display: flex;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .sidebar {
+            width: 250px;
+            height: 100vh;
+            background-color: #222;
+            color: white;
+            padding: 20px;
+            position: fixed;
+            left: 0;
+            top: 0;
+            transition: all 0.3s ease;
+        }
+        .sidebar.hidden {
+            width: 60px;
+            overflow: hidden;
+        }
+        .sidebar .toggle-btn {
+            cursor: pointer;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .sidebar ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        .sidebar ul li {
+            padding: 12px 0;
+            cursor: pointer;
+        }
+        .sidebar ul li:hover {
+            background: #444;
+        }
+        .container {
+            flex: 1;
+            padding: 20px;
+            margin-left: 250px;
+        }
+        .category {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .category-box {
+            width: 250px;
+            border: 1px solid #eee;
+            border-radius: 12px;
+            padding-bottom: 15px;
+            padding-left: 35px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .category-box img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 12px 12px 0 0;
+        }
+        .price {
+            font-weight: bold;
+            font-size: 18px;
+            margin: 10px 0;
+        }
+        .quantity-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 10px 0;
+        }
+        .quantity-container button {
+            background-color: #c97b28;
+            border: none;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            font-size: 18px;
+            color: white;
+            border-radius: 5px;
+        }
+        .quantity-container input {
+            height: 40px;
+            width: 60px;
+            font-size: 18px;
+            text-align: center;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin: 0 10px;
+        }
+        .add-to-cart-btn {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            margin-top: 10px;
+            width: 80%;
+            transition: background-color 0.3s;
+        }
+        .add-to-cart-btn:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar" id="sidebar">
+        <div class="toggle-btn" onclick="toggleSidebar()">☰</div>
+        <ul>
+            <li onclick="location.href='../mainpg.html'">Dashboard</li>
+            <li onclick="location.href='../orders.html'">Orders</li>
+            <li onclick="location.href='../cart.html'">Cart</li>
+            <li onclick="location.href='../customers.html'">Customers</li>
+            <li onclick="location.href='../about.html'">About</li>
+        </ul>
+    </div>
+
+    <div class="container">
+        <div class="category">
+
+            <div class="category-box">
+                <img src="../products/women/w1.png" alt="Floral Maxi Dress">
+                <p class="price">Rs 749</p>
+                <div class="quantity-container">
+                    <button onclick="updateQuantity(this, -1)">-</button>
+                    <input type="number" class="quantity" value="0" min="0">
+                    <button onclick="updateQuantity(this, 1)">+</button>
+                </div>
+                <button class="add-to-cart-btn" onclick="addToCart(this, 'Floral Maxi Dress', '../products/women/w1.png', 749)">Add to Cart</button>
+            </div>
+
+            <div class="category-box">
+                <img src="../products/women/w2.png" alt="Red Silk Skirt">
+                <p class="price">Rs 500</p>
+                <div class="quantity-container">
+                    <button onclick="updateQuantity(this, -1)">-</button>
+                    <input type="number" class="quantity" value="0" min="0">
+                    <button onclick="updateQuantity(this, 1)">+</button>
+                </div>
+                <button class="add-to-cart-btn" onclick="addToCart(this, 'Red Silk Skirt', '../products/women/w2.png', 500)">Add to Cart</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleSidebar() {
+            document.getElementById("sidebar").classList.toggle("hidden");
+        }
+
+        function updateQuantity(button, change) {
+            let input = button.parentElement.querySelector("input");
+            let value = parseInt(input.value) + change;
+            if (value >= 0) {
+                input.value = value;
+            }
+        }
+
+        function addToCart(button, name, imgSrc, price) {
+            // Get the parent category-box
+            let categoryBox = button.closest('.category-box');
+
+            // Get quantity from the current product's quantity input
+            let quantity = parseInt(categoryBox.querySelector('.quantity').value);
+
+            // Only add to cart if quantity is greater than 0
+            if (quantity > 0) {
+                // Get existing cart or initialize a new one
+                let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+                // Check if item already exists in cart
+                let existingItemIndex = cart.findIndex(item => item.name === name && item.imgSrc === imgSrc);
+
+                if (existingItemIndex !== -1) {
+                    // Update quantity if item exists
+                    cart[existingItemIndex].quantity += quantity;
+                } else {
+                    // Add new item
+                    cart.push({
+                        name: name,
+                        imgSrc: imgSrc,
+                        price: price,
+                        quantity: quantity
+                    });
+                }
+
+                // Save cart to localStorage
+                localStorage.setItem('cart', JSON.stringify(cart));
+
+                // Reset quantity
+                categoryBox.querySelector('.quantity').value = 0;
+
+                // Alert user
+                alert(quantity + ' x ' + name + ' added to cart');
+            } else {
+                alert('Please select a quantity');
+            }
+        }
+    </script>
+</body>
+</html>

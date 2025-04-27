@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Category Page</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            display: flex;
+            background-color: #f5d1af;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 250px;
+            height: 100vh;
+            background-color: #222;
+            color: white;
+            padding: 20px;
+            position: fixed;
+            left: 0;
+            top: 0;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar.hidden {
+            width: 60px;
+            overflow: hidden;
+        }
+
+        .sidebar .toggle-btn {
+            cursor: pointer;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .sidebar ul {
+            list-style: none;
+        }
+
+        .sidebar ul li {
+            padding: 12px 0;
+            cursor: pointer;
+        }
+
+        .sidebar ul li:hover {
+            background: #444;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 260px;
+            flex: 1;
+            padding: 20px;
+            transition: margin-left 0.3s ease;
+            width: 100%;
+        }
+
+        .sidebar.hidden + .main-content {
+            margin-left: 70px;
+        }
+
+        /* Search Bar */
+        .search-container {
+            width: 100%;
+            padding: 10px;
+            background: white;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            border-radius: 5px;
+        }
+
+        .search-container input {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            outline: none;
+            font-size: 16px;
+        }
+
+        /* Category Grid */
+        .category-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .category-box {
+            position: relative;
+            width: 100%;
+            height: 250px;
+            border-radius: 10px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .category-box:hover {
+            transform: scale(1.05);
+        }
+
+        .category-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: opacity 0.3s ease;
+        }
+
+        .category-box:hover img {
+            opacity: 0.8;
+        }
+
+        .category-text {
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+            color: white;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .category-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .main-content {
+                margin-left: 70px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .category-container {
+                grid-template-columns: 1fr;
+            }
+            .main-content {
+                margin-left: 70px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="toggle-btn" onclick="toggleSidebar()">☰</div>
+        <ul>
+            <li onclick="location.href='/mainpg.html'">Dashboard</li>
+            <li onclick="location.href='/orders.html'">Orders</li>
+            <li onclick="location.href='/cart.html'">Cart</li>
+            <li onclick="location.href='/customers.html'">Customers</li>
+            <li  onclick="location.href='/about.html'">About</li>
+        </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="search-container">
+            <input type="text" placeholder="Search...">
+        </div>
+
+        <!-- Categories -->
+        <div class="category-container">
+            <div class="category-box" onclick="location.href='catalogs/women.html'">
+                <img src="catcover/women.png" alt="Women">
+                <div class="category-text">Women</div>
+            </div>
+            <div class="category-box" onclick="location.href='catalogs/men.html'">
+                <img src="catcover/men.png" alt="Men">
+                <div class="category-text">Men</div>
+            </div>
+            <div class="category-box" onclick="location.href='catalogs/jewelery.html'">
+                <img src="catcover/jewelery.png" alt="Jewelry">
+                <div class="category-text">Jewelry</div>
+            </div>
+            <div class="category-box" onclick="location.href='catalogs/accessories.html'">
+                <img src="catcover/accessories.png" alt="Accessories">
+                <div class="category-text">Accessories </div>
+            </div>
+            <div class="category-box" onclick="location.href='catalogs/shoes.html'">
+                <img src="catcover/shoes.png" alt="Shoes">
+                <div class="category-text">Shoes</div>
+            </div>
+            <div class="category-box" onclick="location.href='catalogs/bags.html'">
+                <img src="catcover/bag.png" alt="Bags">
+                <div class="category-text">Bags</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleSidebar() {
+            document.getElementById("sidebar").classList.toggle("hidden");
+        }
+    </script>
+
+</body>
+</html>
